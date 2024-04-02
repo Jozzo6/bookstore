@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import NavigationBar from '../components/NavigationBar';
 import BooksPage from './Books/BooksPage';
-import UsersPage from './UsersPage';
+import UsersPage from './Users/UsersPage';
 import HomeUserInfo from './HomeUserInfo';
 
 function HomePage() {
