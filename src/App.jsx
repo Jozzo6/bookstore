@@ -39,7 +39,7 @@ function AppRoutes() {
 				<Routes>
 					<Route path='/login' element={<LoginPage />} />
 					<Route path='/register' element={<RegisterPage />} />
-					<Route path='/' element={<HomePage />} />
+					<Route path='/home' element={<HomePage />} />
 					<Route path='*' element={<HomePage />} />
 				</Routes>
 			</main>

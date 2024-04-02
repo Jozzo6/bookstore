@@ -18,6 +18,7 @@ function RegisterPage() {
 		e.preventDefault();
 		try {
 			await register(email, password, first_name, last_name);
+			navigate('/');
 		} catch (error) {
 			console.error(error);
 		}

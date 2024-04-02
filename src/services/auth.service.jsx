@@ -39,6 +39,7 @@ export function AuthProvider({ children }) {
 	};
 
 	const logout = () => {
+		setAuthState(null);
 		localStorage.removeItem('auth');
 	};
 
