@@ -10,3 +10,11 @@ export const AuthStateEnum = {
 	Authenticated: 'authenticated',
 	Unauthenticated: 'unauthenticated',
 };
+
+export const UpdateState = {
+	Idle: 'idle',
+	Edited: 'edited',
+	Loading: 'loading',
+	Update: 'updated',
+	Error: 'error',
+};

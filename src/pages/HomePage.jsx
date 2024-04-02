@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import NavigationBar from '../components/NavigationBar';
-import BooksPage from './BooksPage';
+import BooksPage from './Books/BooksPage';
 import UsersPage from './UsersPage';
 import HomeUserInfo from './HomeUserInfo';
 

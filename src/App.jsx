@@ -12,6 +12,7 @@ import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
 import { useLocation } from 'react-router-dom';
 import { StateEnum } from './services/enums';
+import axios from 'axios';
 
 function App() {
 	return (
@@ -33,6 +34,9 @@ function AppRoutes() {
 		if (!authValue && location.pathname !== '/register') {
 			navigate('/login');
 		}
+		axios.defaults.headers.common[
+			'Authorization'
+		] = `Bearer ${authValue?.access_token}`;
 		setIsLoading(StateEnum.Success);
 	}, [authValue, navigate, location]);
 
