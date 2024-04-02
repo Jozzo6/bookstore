@@ -6,7 +6,7 @@ import axios from 'axios';
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-	const [authState, setAuthState] = useState(
+	const [authValue, setAuthValue] = useState(
 		JSON.parse(localStorage.getItem('auth'))
 	);
 
@@ -21,7 +21,7 @@ export function AuthProvider({ children }) {
 			},
 		});
 		storeAuthInfo(res.data);
-		setAuthState(res.data);
+		setAuthValue(res.data);
 		return res.data;
 	};
 
@@ -34,12 +34,12 @@ export function AuthProvider({ children }) {
 			type: 'customer',
 		});
 		storeAuthInfo(res.data);
-		setAuthState(res.data);
+		setAuthValue(res.data);
 		return res.data;
 	};
 
 	const logout = () => {
-		setAuthState(null);
+		setAuthValue(null);
 		localStorage.removeItem('auth');
 	};
 
@@ -48,7 +48,7 @@ export function AuthProvider({ children }) {
 	};
 
 	const authContextValue = {
-		authState: authState,
+		authValue: authValue,
 		login: login,
 		register: register,
 		logout: logout,

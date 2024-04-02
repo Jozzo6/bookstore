@@ -7,10 +7,11 @@ import {
 	useNavigate,
 } from 'react-router-dom';
 import { useAuth } from './services/auth.service';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
 import { useLocation } from 'react-router-dom';
+import { StateEnum } from './services/enums';
 
 function App() {
 	return (
@@ -23,15 +24,21 @@ function App() {
 }
 
 function AppRoutes() {
-	const { authState } = useAuth();
+	const { authValue } = useAuth();
 	const navigate = useNavigate();
 	const location = useLocation();
+	const [isLoading, setIsLoading] = useState(StateEnum.Loading);
 
 	useEffect(() => {
-		if (!authState && location.pathname !== '/register') {
+		if (!authValue && location.pathname !== '/register') {
 			navigate('/login');
 		}
-	}, [authState, navigate, location]);
+		setIsLoading(StateEnum.Success);
+	}, [authValue, navigate, location]);
+
+	if (isLoading == StateEnum.Loading) {
+		return <div>Loading...</div>;
+	}
 
 	return (
 		<>

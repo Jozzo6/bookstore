@@ -9,17 +9,17 @@ function NavigationBar() {
 		<nav className='navbar  bg-body-tertiary p-5 d-flex flex-column'>
 			<ul className='navbar-nav me-auto mb-2 mb-lg-0'>
 				<li className='nav-item'>
-					<NavLink activeClassName='active' className='nav-link' to='/'>
+					<NavLink activeClassName='active' className='nav-link' to='/home'>
 						Home
 					</NavLink>
 				</li>
 				<li className='nav-item'>
-					<NavLink className='nav-link' to='/books'>
+					<NavLink activeClassName='active' className='nav-link' to='/books'>
 						Books
 					</NavLink>
 				</li>
 				<li className='nav-item'>
-					<NavLink className='nav-link' to='/users'>
+					<NavLink activeClassName='active' className='nav-link' to='/users'>
 						Users
 					</NavLink>
 				</li>
