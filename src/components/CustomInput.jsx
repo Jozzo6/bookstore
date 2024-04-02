@@ -6,6 +6,7 @@ const CustomInput = ({
 	value,
 	onChange,
 	type = 'text',
+	message,
 	placeholder,
 	...props
 }) => {
@@ -26,6 +27,7 @@ const CustomInput = ({
 				{...props}
 				className='form-control'
 			/>
+			{message && <div className='form-text'>{message}</div>}
 		</div>
 	);
 };
@@ -37,6 +39,7 @@ CustomInput.propTypes = {
 	onChange: PropTypes.func.isRequired,
 	type: PropTypes.string,
 	placeholder: PropTypes.string,
+	message: PropTypes.string,
 };
 
 export default CustomInput;

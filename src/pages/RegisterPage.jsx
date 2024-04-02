@@ -5,32 +5,50 @@ import { useAuth } from '../services/auth.service';
 import SecondaryButton from '../components/SecondaryButton';
 import { useNavigate } from 'react-router-dom';
 
-function LoginPage() {
-	const { login } = useAuth();
+function RegisterPage() {
+	const { register } = useAuth();
 	const navigate = useNavigate();
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [first_name, setFirstName] = useState('');
+	const [last_name, setLastName] = useState('');
 
-	const loginAction = async (e) => {
+	const registerAction = async (e) => {
 		e.preventDefault();
 		try {
-			await login(email, password);
+			await register(email, password, first_name, last_name);
 		} catch (error) {
 			console.error(error);
 		}
 	};
 
 	const isValid = () => {
-		return email !== '' && password !== '';
+		return email !== '' && password.length >= 6;
 	};
 
 	return (
 		<div className='container'>
-			<h1 className='h1 mb-5'>Login Page</h1>
+			<h1 className='h1 mb-5'>Register Page</h1>
 			<div className='card'>
 				<div className='card-body'>
-					<form onSubmit={loginAction} className='mb-3'>
+					<form onSubmit={registerAction} className='mb-3'>
+						<CustomInput
+							label='First Name'
+							name='first_name'
+							value={first_name}
+							onChange={(e) => setFirstName(e.target.value)}
+							type='text'
+							placeholder='First Name'
+						/>
+						<CustomInput
+							label='Last Name'
+							name='last_name'
+							value={last_name}
+							onChange={(e) => setLastName(e.target.value)}
+							type='text'
+							placeholder='First Name'
+						/>
 						<CustomInput
 							label='Email'
 							name='email'
@@ -47,22 +65,20 @@ function LoginPage() {
 							type='password'
 							placeholder='Password'
 							obscure='true'
+							message={'Password must be at least 6 characters'}
 						/>
 						<PrimaryButton
 							type='submit'
-							text='Login'
-							onClick={loginAction}
+							text='Register'
+							onClick={registerAction}
 							disabled={!isValid()}
 						/>
 					</form>
-					<SecondaryButton
-						text='Register'
-						onClick={() => navigate('/register')}
-					/>
+					<SecondaryButton text='Login' onClick={() => navigate('/login')} />
 				</div>
 			</div>
 		</div>
 	);
 }
 
-export default LoginPage;
+export default RegisterPage;

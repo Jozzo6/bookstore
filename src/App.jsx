@@ -9,6 +9,8 @@ import {
 import { useAuth } from './services/auth.service';
 import { useEffect } from 'react';
 import HomePage from './pages/HomePage';
+import RegisterPage from './pages/RegisterPage';
+import { useLocation } from 'react-router-dom';
 
 function App() {
 	return (
@@ -23,22 +25,22 @@ function App() {
 function AppRoutes() {
 	const { authState } = useAuth();
 	const navigate = useNavigate();
+	const location = useLocation();
 
 	useEffect(() => {
-		if (authState) {
-			navigate('/');
-		} else {
+		if (!authState && location.pathname !== '/register') {
 			navigate('/login');
 		}
-	}, [authState, navigate]);
+	}, [authState, navigate, location]);
 
 	return (
 		<>
 			<main>
 				<Routes>
 					<Route path='/login' element={<LoginPage />} />
+					<Route path='/register' element={<RegisterPage />} />
 					<Route path='/' element={<HomePage />} />
-					<Route path='*' element={<LoginPage />} />
+					<Route path='*' element={<HomePage />} />
 				</Routes>
 			</main>
 		</>

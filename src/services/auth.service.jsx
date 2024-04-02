@@ -25,10 +25,13 @@ export function AuthProvider({ children }) {
 		return res.data;
 	};
 
-	const register = async (email, password) => {
+	const register = async (email, password, first_name, last_name) => {
 		const res = await axios.post('auth/register', {
 			email: email,
 			password: password,
+			first_name: first_name,
+			last_name: last_name,
+			type: 'customer',
 		});
 		storeAuthInfo(res.data);
 		setAuthState(res.data);
