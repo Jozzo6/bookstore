@@ -4,34 +4,34 @@ import bookService from '../../../services/book.service';
 import CustomInput from '../../../components/CustomInput';
 import PrimaryButton from '../../../components/PrimaryButton';
 import SecondaryButton from '../../../components/SecondaryButton';
-import { UpdateState } from '../../../services/enums';
+import { FormState } from '../../../services/enums';
 
 function BookInfo({ book, onClose }) {
 	const [b, setBook] = useState(book);
-	const [state, setState] = useState(UpdateState.Idle);
+	const [state, setState] = useState(FormState.Idle);
 	const [errMessage, setErrMessage] = useState(null);
 
 	const update = async (e) => {
 		try {
 			setErrMessage(null);
-			setState(UpdateState.Loading);
+			setState(FormState.Loading);
 			e.preventDefault();
 			await bookService.updateBook(b);
-			setState(UpdateState.Updated);
+			setState(FormState.Success);
 		} catch (e) {
-			setState(UpdateState.Error);
+			setState(FormState.Error);
 			setErrMessage(e.message);
 		}
 	};
 
 	const close = () => {
-		if (state === UpdateState.Loading) {
+		if (state === FormState.Loading) {
 			return;
-		} else if (state === UpdateState.Idle) {
+		} else if (state === FormState.Idle) {
 			onClose(null);
-		} else if (state === UpdateState.Updated) {
+		} else if (state === FormState.Success) {
 			onClose(b);
-		} else if (state === UpdateState.Error || state === UpdateState.Edited) {
+		} else if (state === FormState.Error || state === FormState.Edited) {
 			if (window.confirm('Are you sure you want to discard changes?')) {
 				onClose(null);
 			}
@@ -42,7 +42,11 @@ function BookInfo({ book, onClose }) {
 		<div>
 			<div className='d-flex column justify-content-between'>
 				<h3>Book Info </h3>
-				<SecondaryButton text='Close' onClick={close} />
+				<SecondaryButton
+					text='Close'
+					disabled={state === FormState.Loading}
+					onClick={close}
+				/>
 			</div>
 			<form onSubmit={update}>
 				<CustomInput
@@ -51,7 +55,7 @@ function BookInfo({ book, onClose }) {
 					value={b.author}
 					onChange={(e) => {
 						setBook({ ...b, author: e.target.value });
-						setState(UpdateState.Edited);
+						setState(FormState.Edited);
 					}}
 					type='text'
 				/>
@@ -61,7 +65,7 @@ function BookInfo({ book, onClose }) {
 					value={b.title}
 					onChange={(e) => {
 						setBook({ ...b, title: e.target.value });
-						setState(UpdateState.Edited);
+						setState(FormState.Edited);
 					}}
 					type='text'
 				/>
@@ -71,7 +75,7 @@ function BookInfo({ book, onClose }) {
 					value={b.publisher}
 					onChange={(e) => {
 						setBook({ ...b, publisher: e.target.value });
-						setState(UpdateState.Edited);
+						setState(FormState.Edited);
 					}}
 					type='text'
 				/>
@@ -81,7 +85,7 @@ function BookInfo({ book, onClose }) {
 					value={b.year}
 					onChange={(e) => {
 						setBook({ ...b, year: e.target.value });
-						setState(UpdateState.Edited);
+						setState(FormState.Edited);
 					}}
 					type='number'
 				/>
@@ -91,7 +95,7 @@ function BookInfo({ book, onClose }) {
 					value={b.isbn}
 					onChange={(e) => {
 						setBook({ ...b, isbn: e.target.value });
-						setState(UpdateState.Edited);
+						setState(FormState.Edited);
 					}}
 					type='text'
 				/>
@@ -101,14 +105,19 @@ function BookInfo({ book, onClose }) {
 					value={b.quantity}
 					onChange={(e) => {
 						setBook({ ...b, quantity: e.target.value });
-						setState(UpdateState.Edited);
+						setState(FormState.Edited);
 					}}
 					type='text'
 				/>
 				<div className='d-flex row'>
-					<PrimaryButton type='submit' text='Update' onClick={update} />
+					<PrimaryButton
+						type='submit'
+						disabled={state === FormState.Loading}
+						text='Update'
+						onClick={update}
+					/>
 				</div>
-				{state === UpdateState.Error && errMessage && (
+				{state === FormState.Error && errMessage && (
 					<div className='alert alert-danger mt-3' role='alert'>
 						{errMessage || 'An error occurred'}
 					</div>

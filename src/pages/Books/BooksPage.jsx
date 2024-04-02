@@ -4,11 +4,13 @@ import { StateEnum } from '../../services/enums.jsx';
 import PrimaryButton from '../../components/PrimaryButton.jsx';
 import BookInfo from './components/BookInfo.jsx';
 import Modal from '../../components/Modal/Modal.jsx';
+import BookCreate from './components/BookCreate.jsx';
 
 function BooksPage() {
 	const [bookState, setBookState] = useState(StateEnum.UnInitialized);
 	const [books, setBooks] = useState([]);
 	const [selectedBook, setSelectedBook] = useState(null);
+	const [createBookOpened, setCreateBookOpened] = useState(false);
 
 	const getBooks = useCallback(async () => {
 		try {
@@ -44,16 +46,18 @@ function BooksPage() {
 		setSelectedBook(null);
 	};
 
+	const closeBookCreate = (book) => {
+		if (book) {
+			setBooks((prevBooks) => [...prevBooks, book]);
+		}
+		setCreateBookOpened(false);
+	};
+
 	return (
 		<div className='container'>
 			<div className='d-flex column justify-content-between m-4'>
 				<h3 className='h3'>Books Page</h3>
-				<PrimaryButton
-					text='Add'
-					onClick={() => {
-						console.log('add book view');
-					}}
-				/>
+				<PrimaryButton text='Add' onClick={() => setCreateBookOpened(true)} />
 			</div>
 			{bookState === 'loading' && <p>Loading...</p>}
 			{bookState === 'error' && <p>Error loading books</p>}
@@ -93,6 +97,10 @@ function BooksPage() {
 				{selectedBook && (
 					<BookInfo book={selectedBook} onClose={closeBookInfo} />
 				)}
+			</Modal>
+
+			<Modal isOpen={createBookOpened}>
+				<BookCreate onClose={closeBookCreate} />
 			</Modal>
 		</div>
 	);
