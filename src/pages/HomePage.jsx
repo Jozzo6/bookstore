@@ -3,7 +3,7 @@ import NavigationBar from '../components/NavigationBar';
 import BooksPage from './Books/BooksPage';
 import UsersPage from './Users/UsersPage';
 import HomeUserInfo from './HomeUserInfo';
-import UserInfo from './Users/components/UserInfo';
+import UserInfoPage from './Users/UserInfoPage';
 
 function HomePage() {
 	return (
@@ -13,7 +13,7 @@ function HomePage() {
 				<Route path='/' element={<HomeUserInfo />} />
 				<Route path='/books' element={<BooksPage />} />
 				<Route path='/users' element={<UsersPage />} />
-				<Route path='/users/:id' element={<UserInfo />} />
+				<Route path='/users/:id' element={<UserInfoPage />} />
 			</Routes>
 		</div>
 	);
