@@ -18,3 +18,9 @@ export const FormState = {
 	Success: 'success',
 	Error: 'error',
 };
+
+export const UserTypeEnum = {
+	Admin: 'admin',
+	Librarian: 'librarian',
+	User: 'user',
+}

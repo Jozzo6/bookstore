@@ -3,7 +3,7 @@ import PrimaryButton from './PrimaryButton';
 import { useAuth } from '../services/auth.service';
 
 function NavigationBar() {
-	const { logout } = useAuth();
+	const { logout, hasAccess } = useAuth();
 
 	return (
 		<nav className='navbar  bg-body-tertiary p-5 d-flex flex-column'>
@@ -13,16 +13,20 @@ function NavigationBar() {
 						Home
 					</NavLink>
 				</li>
-				<li className='nav-item'>
-					<NavLink activeClassName='active' className='nav-link' to='/books'>
-						Books
-					</NavLink>
-				</li>
-				<li className='nav-item'>
-					<NavLink activeClassName='active' className='nav-link' to='/users'>
-						Users
-					</NavLink>
-				</li>
+				{hasAccess(2) && (
+					<li className='nav-item'>
+						<NavLink activeClassName='active' className='nav-link' to='/books'>
+							Books
+						</NavLink>
+					</li>
+				)}
+				{hasAccess(2) && (
+					<li className='nav-item'>
+						<NavLink activeClassName='active' className='nav-link' to='/users'>
+							Users
+						</NavLink>
+					</li>
+				)}
 			</ul>
 			<PrimaryButton text='Logout' onClick={logout} />
 		</nav>

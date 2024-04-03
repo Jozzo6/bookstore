@@ -47,12 +47,18 @@ export function AuthProvider({ children }) {
 		localStorage.setItem('auth', JSON.stringify(auth));
 	};
 
+	const hasAccess = (minRole) => {
+		console.log(authValue);
+		return authValue && authValue.user.type >= minRole;
+	};
+
 	const authContextValue = {
 		authValue: authValue,
 		login: login,
 		register: register,
 		logout: logout,
 		storeAuthInfo: storeAuthInfo,
+		hasAccess: hasAccess,
 	};
 
 	return (

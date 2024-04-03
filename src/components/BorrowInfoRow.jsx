@@ -77,7 +77,8 @@ function BookInfoRow({
 BookInfoRow.propTypes = {
 	borrow: PropTypes.object.isRequired,
 	showBookInfo: PropTypes.bool.isRequired,
-	removeFromList: PropTypes.func.isRequired,
+	removeFromList: PropTypes.func,
+	showDeleteButton: PropTypes.bool,
 };
 
 export default BookInfoRow;

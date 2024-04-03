@@ -30,7 +30,7 @@ function HomeUserInfo() {
 
 	return (
 		<div>
-			<h1>Home</h1>
+			<h3>Home</h3>
 
 			{state === StateEnum.Loading && <p>Loading...</p>}
 			{state === StateEnum.Error && <p>Error loading borrowed books</p>}
@@ -52,7 +52,6 @@ function HomeUserInfo() {
 								borrow={borrow}
 								showBookInfo={true}
 								showDeleteButton={false}
-								removeFromList={() => {}}
 							/>
 						))}
 					</tbody>

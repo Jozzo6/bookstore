@@ -5,10 +5,12 @@ import PrimaryButton from '../../components/PrimaryButton';
 import { FormState, StateEnum } from '../../services/enums';
 import { useLocation } from 'react-router-dom';
 import BorrowedListByUser from './components/BorrowedBooksByUser';
+import { useAuth } from '../../services/auth.service';
 
 function UserInfoPage() {
 	const location = useLocation();
 	const user = location.state.user;
+	const { hasAccess } = useAuth();
 
 	const [u, setUser] = useState(user);
 	const [userState, setUserState] = useState(StateEnum.UnInitialized);
@@ -64,6 +66,7 @@ function UserInfoPage() {
 								setUser({ ...u, email: e.target.value });
 								setFormState(FormState.Edited);
 							}}
+							disabled={!hasAccess(3)}
 							type='text'
 						/>
 						<CustomInput
@@ -74,6 +77,7 @@ function UserInfoPage() {
 								setUser({ ...u, first_name: e.target.value });
 								setFormState(FormState.Edited);
 							}}
+							disabled={!hasAccess(3)}
 							type='text'
 						/>
 						<CustomInput
@@ -84,6 +88,7 @@ function UserInfoPage() {
 								setUser({ ...u, last_name: e.target.value });
 								setFormState(FormState.Edited);
 							}}
+							disabled={!hasAccess(3)}
 							type='text'
 						/>
 						<CustomInput
@@ -94,12 +99,13 @@ function UserInfoPage() {
 								setUser({ ...u, type: e.target.value });
 								setFormState(FormState.Edited);
 							}}
+							disabled={!hasAccess(3)}
 							type='text'
 						/>
 						<div className='d-flex row'>
 							<PrimaryButton
 								type='submit'
-								disabled={formState === FormState.Loading}
+								disabled={formState === FormState.Loading || !hasAccess(3)}
 								text='Update'
 								onClick={update}
 							/>
