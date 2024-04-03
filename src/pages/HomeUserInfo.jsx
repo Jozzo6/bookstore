@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { StateEnum } from '../services/enums';
 import BookInfoRow from '../components/BorrowInfoRow';
 import Loading from '../components/Loading/Loading';
+import LoadingFailed from '../components/LoadingFailed/LoadingFailed';
 
 function HomeUserInfo() {
 	const [borrowedBooks, setBorrows] = useState([]);
@@ -34,7 +35,12 @@ function HomeUserInfo() {
 			<h3>Home</h3>
 
 			{state === StateEnum.Loading && <Loading />}
-			{state === StateEnum.Error && <p>Error loading borrowed books</p>}
+			{state === StateEnum.Error && (
+				<LoadingFailed
+					text='Something went wrong. Failed to load borrowed books.'
+					action={getBorrows}
+				/>
+			)}
 			{state === StateEnum.Success && (
 				<table className='table table-striped'>
 					<thead>

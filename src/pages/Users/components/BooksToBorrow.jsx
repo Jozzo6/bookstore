@@ -4,6 +4,7 @@ import { StateEnum } from '../../../services/enums';
 import bookService from '../../../services/book.service';
 import PrimaryButton from '../../../components/PrimaryButton';
 import Loading from '../../../components/Loading/Loading';
+import LoadingFailed from '../../../components/LoadingFailed/LoadingFailed';
 
 function BooksToBorrow({ user, onClose }) {
 	const [books, setBooks] = useState([]);
@@ -13,11 +14,11 @@ function BooksToBorrow({ user, onClose }) {
 
 	useEffect(() => {
 		if (state === StateEnum.UnInitialized) {
-			getUsers();
+			getBooks();
 		}
 	}, [state]);
 
-	const getUsers = async () => {
+	const getBooks = async () => {
 		try {
 			setState(StateEnum.Loading);
 			setBooks(await bookService.getAllBooks());
@@ -55,7 +56,12 @@ function BooksToBorrow({ user, onClose }) {
 				</div>
 			)}
 			{state === StateEnum.Loading && <Loading />}
-			{state === StateEnum.Error && <p>Error loading users</p>}
+			{state === StateEnum.Error && (
+				<LoadingFailed
+					text='Something went wrong. Failed to load books.'
+					action={getBooks}
+				/>
+			)}
 			{state === StateEnum.Success && (
 				<div>
 					{books.map((book) => (

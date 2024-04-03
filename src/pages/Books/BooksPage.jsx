@@ -6,6 +6,7 @@ import BookInfo from './components/BookInfo.jsx';
 import Modal from '../../components/Modal/Modal.jsx';
 import BookCreate from './components/BookCreate.jsx';
 import Loading from '../../components/Loading/Loading.jsx';
+import LoadingFailed from '../../components/LoadingFailed/LoadingFailed.jsx';
 
 function BooksPage() {
 	const [bookState, setBookState] = useState(StateEnum.UnInitialized);
@@ -60,9 +61,11 @@ function BooksPage() {
 				<h3 className='h3'>Books Page</h3>
 				<PrimaryButton text='Add' onClick={() => setCreateBookOpened(true)} />
 			</div>
-			{bookState === 'loading' && <Loading />}
-			{bookState === 'error' && <p>Error loading books</p>}
-			{bookState === 'success' && (
+			{bookState === StateEnum.Loading && <Loading />}
+			{bookState === StateEnum.Error && (
+				<LoadingFailed text='Failed to load books' action={getBooks} />
+			)}
+			{bookState === StateEnum.Success && (
 				<table className='table table-striped'>
 					<thead>
 						<tr>

@@ -4,10 +4,10 @@ import { StateEnum } from '../../../services/enums';
 import bookService from '../../../services/book.service';
 import PrimaryButton from '../../../components/PrimaryButton';
 import Modal from '../../../components/Modal/Modal';
-// import BorrowBookToUser from './BorrowBookToUser';
 import BookInfoRow from '../../../components/BorrowInfoRow';
 import BooksToBorrow from './BooksToBorrow';
 import Loading from '../../../components/Loading/Loading';
+import LoadingFailed from '../../../components/LoadingFailed/LoadingFailed';
 
 function BorrowedListByUser({ user }) {
 	const [state, setState] = useState(StateEnum.UnInitialized);
@@ -61,7 +61,12 @@ function BorrowedListByUser({ user }) {
 				/>
 			</div>
 			{state === StateEnum.Loading && <Loading />}
-			{state === StateEnum.Error && <p>Error loading borrowed list</p>}
+			{state === StateEnum.Error && (
+				<LoadingFailed
+					text='Something went wrong. Failed to load borrowed books.'
+					action={getBorrows}
+				/>
+			)}
 			{state === StateEnum.Success && (
 				<table className='table table-striped'>
 					<thead>
