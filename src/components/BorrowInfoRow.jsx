@@ -5,7 +5,12 @@ import { useState } from 'react';
 import PrimaryButton from './PrimaryButton';
 import SecondaryButton from './SecondaryButton';
 
-function BookInfoRow({ borrow, showBookInfo, removeFromList }) {
+function BookInfoRow({
+	borrow,
+	showBookInfo,
+	removeFromList,
+	showDeleteButton = true,
+}) {
 	const [state, setState] = useState(FormState.Idle);
 
 	const returnBook = async () => {
@@ -48,11 +53,13 @@ function BookInfoRow({ borrow, showBookInfo, removeFromList }) {
 				</span>
 			</th>
 			<th>
-				<SecondaryButton
-					disabled={state === FormState.Loading}
-					onClick={deleteBorrow}
-					text='Delete'
-				/>
+				{showDeleteButton && (
+					<SecondaryButton
+						disabled={state === FormState.Loading}
+						onClick={deleteBorrow}
+						text='Delete'
+					/>
+				)}
 			</th>
 			<th>
 				{borrow.status === 'borrowed' && (
