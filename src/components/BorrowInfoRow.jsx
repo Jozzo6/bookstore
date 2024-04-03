@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import bookService from '../services/book.service';
-import { FormState } from '../services/enums';
+import { FormState, MessageBoxType } from '../services/enums';
 import { useState } from 'react';
 import PrimaryButton from './PrimaryButton';
 import SecondaryButton from './SecondaryButton';
+import { useMessageBox } from '../components/MessageBox/MessageBox';
 
 function BookInfoRow({
 	borrow,
@@ -12,14 +13,17 @@ function BookInfoRow({
 	showDeleteButton = true,
 }) {
 	const [state, setState] = useState(FormState.Idle);
+	const { showMessage } = useMessageBox();
 
 	const returnBook = async () => {
 		try {
 			setState(FormState.Loading);
 			await bookService.returnBook(borrow.id);
 			borrow.status = 'returned';
+			showMessage('Book returned successfully', MessageBoxType.Success);
 			setState(FormState.Success);
 		} catch (e) {
+			showMessage('Failed to return message', MessageBoxType.Error);
 			setState(FormState.Error);
 		}
 	};
@@ -29,8 +33,10 @@ function BookInfoRow({
 			setState(FormState.Loading);
 			await bookService.deleteBorrow(borrow.id);
 			removeFromList(borrow.id);
+			showMessage('Book deleted successfully', MessageBoxType.Success);
 			setState(FormState.Success);
 		} catch (e) {
+			showMessage('Failed to delete book', MessageBoxType.Error);
 			setState(FormState.Error);
 		}
 	};

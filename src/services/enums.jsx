@@ -23,4 +23,9 @@ export const UserTypeEnum = {
 	Admin: 'admin',
 	Librarian: 'librarian',
 	User: 'user',
-}
+};
+
+export const MessageBoxType = {
+	Success: 'success',
+	Error: 'error',
+};

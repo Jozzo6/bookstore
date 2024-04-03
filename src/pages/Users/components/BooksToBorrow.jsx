@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { StateEnum } from '../../../services/enums';
+import { MessageBoxType, StateEnum } from '../../../services/enums';
 import bookService from '../../../services/book.service';
 import PrimaryButton from '../../../components/PrimaryButton';
 import Loading from '../../../components/Loading/Loading';
 import LoadingFailed from '../../../components/LoadingFailed/LoadingFailed';
+import { useMessageBox } from '../../../components/MessageBox/MessageBox';
 
 function BooksToBorrow({ user, onClose }) {
 	const [books, setBooks] = useState([]);
 	const [state, setState] = useState(StateEnum.UnInitialized);
 	const [borrowActionState, setBorrowActionState] = useState(StateEnum.Idle);
-	const [errMessage, setErrMessage] = useState(null);
+	const { showMessage } = useMessageBox();
 
 	useEffect(() => {
 		if (state === StateEnum.UnInitialized) {
@@ -23,7 +24,7 @@ function BooksToBorrow({ user, onClose }) {
 			setState(StateEnum.Loading);
 			setBooks(await bookService.getAllBooks());
 			setState(StateEnum.Success);
-		} catch (error) {
+		} catch (e) {
 			setState(StateEnum.Error);
 		}
 	};
@@ -31,15 +32,14 @@ function BooksToBorrow({ user, onClose }) {
 	const borrowToUser = async (book) => {
 		try {
 			setBorrowActionState(StateEnum.Loading);
-			let res = await bookService.borrowBook(book.id, user.id);
-			if (!res.error) {
-				setBorrowActionState(StateEnum.Success);
-				onClose(true);
-			}
-			setErrMessage(res.error);
+			await bookService.borrowBook(book.id, user.id);
+			showMessage('Book borrowed successfully', MessageBoxType.Success);
 			setBorrowActionState(StateEnum.Error);
 		} catch (e) {
-			console.error(e);
+			showMessage(
+				'Failed to borrow book: ' + e.toString(),
+				MessageBoxType.Error
+			);
 			setBorrowActionState(StateEnum.Error);
 		}
 	};
@@ -50,11 +50,6 @@ function BooksToBorrow({ user, onClose }) {
 				<h5>Select user to which you`ll borrow the book</h5>
 				<PrimaryButton text='Close' onClick={() => onClose(false)} />
 			</div>
-			{borrowActionState === StateEnum.Error && errMessage !== null && (
-				<div className='alert alert-danger mt-3' role='alert'>
-					{errMessage}
-				</div>
-			)}
 			{state === StateEnum.Loading && <Loading />}
 			{state === StateEnum.Error && (
 				<LoadingFailed

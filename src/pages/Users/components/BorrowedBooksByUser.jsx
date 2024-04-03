@@ -45,7 +45,6 @@ function BorrowedListByUser({ user }) {
 	};
 
 	const removeFromList = (borrowId) => {
-		console.log('removeFromList');
 		setBorrowedList((prevList) =>
 			prevList.filter((borrow) => borrow.id !== borrowId)
 		);

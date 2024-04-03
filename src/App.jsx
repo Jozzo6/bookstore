@@ -14,13 +14,20 @@ import { useLocation } from 'react-router-dom';
 import { StateEnum } from './services/enums';
 import axios from 'axios';
 import Loading from './components/Loading/Loading';
+import {
+	MessageBox,
+	MessageBoxProvider,
+} from './components/MessageBox/MessageBox';
 
 function App() {
 	return (
 		<>
-			<Router>
-				<AppRoutes />
-			</Router>
+			<MessageBoxProvider>
+				<MessageBox />
+				<Router>
+					<AppRoutes />
+				</Router>
+			</MessageBoxProvider>
 		</>
 	);
 }

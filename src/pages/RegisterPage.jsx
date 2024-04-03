@@ -4,10 +4,13 @@ import PrimaryButton from '../components/PrimaryButton';
 import { useAuth } from '../services/auth.service';
 import SecondaryButton from '../components/SecondaryButton';
 import { useNavigate } from 'react-router-dom';
+import { useMessageBox } from '../components/MessageBox/MessageBox';
+import { MessageBoxType } from '../services/enums';
 
 function RegisterPage() {
 	const { register } = useAuth();
 	const navigate = useNavigate();
+	const { showMessage } = useMessageBox();
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -20,12 +23,12 @@ function RegisterPage() {
 			await register(email, password, first_name, last_name);
 			navigate('/');
 		} catch (error) {
-			console.error(error);
+			showMessage('Failed to register', MessageBoxType.Error);
 		}
 	};
 
 	const isValid = () => {
-		return email !== '' && password.length >= 6;
+		return email !== '' && password.length >= 8;
 	};
 
 	return (

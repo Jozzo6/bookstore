@@ -2,31 +2,32 @@ import { useEffect, useState } from 'react';
 import userService from '../../services/user.service';
 import CustomInput from '../../components/CustomInput';
 import PrimaryButton from '../../components/PrimaryButton';
-import { FormState, StateEnum } from '../../services/enums';
+import { FormState, MessageBoxType, StateEnum } from '../../services/enums';
 import { useLocation } from 'react-router-dom';
 import BorrowedListByUser from './components/BorrowedBooksByUser';
 import { useAuth } from '../../services/auth.service';
 import Loading from '../../components/Loading/Loading';
+import { useMessageBox } from '../../components/MessageBox/MessageBox';
 
 function UserInfoPage() {
 	const location = useLocation();
 	const user = location.state.user;
 	const { hasAccess } = useAuth();
+	const { showMessage } = useMessageBox();
 
 	const [u, setUser] = useState(user);
 	const [userState, setUserState] = useState(StateEnum.UnInitialized);
 	const [formState, setFormState] = useState(FormState.Idle);
-	const [errMessage, setErrMessage] = useState(null);
 
 	const update = async (e) => {
 		try {
-			setErrMessage(null);
-			setFormState(FormState.Loading);
 			e.preventDefault();
+			setFormState(FormState.Loading);
 			await userService.updateUser(u);
+			showMessage('User updated successfully', MessageBoxType.Success);
 		} catch (e) {
+			showMessage('Failed to update user', MessageBoxType.Error);
 			setFormState(FormState.Error);
-			setErrMessage(e.message);
 		}
 	};
 
@@ -111,11 +112,6 @@ function UserInfoPage() {
 								onClick={update}
 							/>
 						</div>
-						{formState === FormState.Error && errMessage && (
-							<div className='alert alert-danger mt-3' role='alert'>
-								{errMessage || 'An error occurred'}
-							</div>
-						)}
 					</form>
 					<div className='mt-3'>
 						<BorrowedListByUser user={u} />

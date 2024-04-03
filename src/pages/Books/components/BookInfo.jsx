@@ -4,24 +4,25 @@ import bookService from '../../../services/book.service';
 import CustomInput from '../../../components/CustomInput';
 import PrimaryButton from '../../../components/PrimaryButton';
 import SecondaryButton from '../../../components/SecondaryButton';
-import { FormState } from '../../../services/enums';
+import { FormState, MessageBoxType } from '../../../services/enums';
 import BorrowedListByBook from './BorrowedListByBook';
+import { useMessageBox } from '../../../components/MessageBox/MessageBox';
 
 function BookInfo({ book, onClose }) {
 	const [b, setBook] = useState(book);
 	const [state, setState] = useState(FormState.Idle);
-	const [errMessage, setErrMessage] = useState(null);
+	const { showMessage } = useMessageBox();
 
 	const update = async (e) => {
 		try {
-			setErrMessage(null);
 			setState(FormState.Loading);
 			e.preventDefault();
 			await bookService.updateBook(b);
+			showMessage('Book updated successfully', MessageBoxType.Success);
 			setState(FormState.Success);
 		} catch (e) {
 			setState(FormState.Error);
-			setErrMessage(e.message);
+			showMessage('Failed to update book', MessageBoxType.Error);
 		}
 	};
 
@@ -119,11 +120,6 @@ function BookInfo({ book, onClose }) {
 							onClick={update}
 						/>
 					</div>
-					{state === FormState.Error && errMessage && (
-						<div className='alert alert-danger mt-3' role='alert'>
-							{errMessage || 'An error occurred'}
-						</div>
-					)}
 				</form>
 				<BorrowedListByBook book={b} />
 			</div>

@@ -4,10 +4,13 @@ import PrimaryButton from '../components/PrimaryButton';
 import { useAuth } from '../services/auth.service';
 import SecondaryButton from '../components/SecondaryButton';
 import { useNavigate } from 'react-router-dom';
+import { useMessageBox } from '../components/MessageBox/MessageBox';
+import { MessageBoxType } from '../services/enums';
 
 function LoginPage() {
 	const { login } = useAuth();
 	const navigate = useNavigate();
+	const { showMessage } = useMessageBox();
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -18,7 +21,7 @@ function LoginPage() {
 			await login(email, password);
 			navigate('/home');
 		} catch (error) {
-			console.error(error);
+			showMessage('Failed to login', MessageBoxType.Error);
 		}
 	};
 

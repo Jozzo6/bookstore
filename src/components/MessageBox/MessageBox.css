@@ -1,0 +1,30 @@
+.message-box {
+	position: fixed;
+	top: 0;
+	right: 0;
+	padding: 10px;
+	max-width: 300px;
+	border-radius: 2px;
+	margin: 10px;
+	z-index: 2000;
+	animation: slide 0.5s forwards;
+}
+
+.message-box h5 {
+	color: white;
+	text-align: center;
+}
+
+.message-box.success {
+	background-color: #4caf4fc8;
+}
+
+.message-box.error {
+	background-color: #f44336cb;
+}
+
+@keyframes slide {
+	100% {
+		top: 20px;
+	}
+}

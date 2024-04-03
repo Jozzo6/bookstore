@@ -4,7 +4,8 @@ import bookService from '../../../services/book.service';
 import CustomInput from '../../../components/CustomInput';
 import PrimaryButton from '../../../components/PrimaryButton';
 import SecondaryButton from '../../../components/SecondaryButton';
-import { FormState } from '../../../services/enums';
+import { FormState, MessageBoxType } from '../../../services/enums';
+import { useMessageBox } from '../../../components/MessageBox/MessageBox';
 
 function BookInfo({ onClose }) {
 	const [b, setBook] = useState({
@@ -15,20 +16,20 @@ function BookInfo({ onClose }) {
 		isbn: '',
 		quantity: '',
 	});
+	const { showMessage } = useMessageBox();
 	const [state, setState] = useState(FormState.Idle);
-	const [errMessage, setErrMessage] = useState(null);
 
 	const create = async (e) => {
 		try {
-			setErrMessage(null);
 			setState(FormState.Loading);
 			e.preventDefault();
 			let book = await bookService.createBook(b);
+			showMessage('Book created successfully', MessageBoxType.Success);
 			setState(FormState.Success);
 			onClose(book);
 		} catch (e) {
 			setState(FormState.Error);
-			setErrMessage(e.message);
+			showMessage('Failed to create book', MessageBoxType.Error);
 		}
 	};
 
@@ -129,11 +130,6 @@ function BookInfo({ onClose }) {
 						onClick={create}
 					/>
 				</div>
-				{state === FormState.Error && errMessage && (
-					<div className='alert alert-danger mt-3' role='alert'>
-						{errMessage || 'An error occurred'}
-					</div>
-				)}
 			</form>
 		</div>
 	);
