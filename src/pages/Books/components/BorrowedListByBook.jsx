@@ -2,12 +2,12 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { StateEnum } from '../../../services/enums';
 import bookService from '../../../services/book.service';
-import UserBorrowInfo from '../../../components/UserBorrowInfo';
 import PrimaryButton from '../../../components/PrimaryButton';
 import Modal from '../../../components/Modal/Modal';
 import BorrowBookToUser from './BorrowBookToUser';
+import BookInfoRow from '../../../components/BorrowInfoRow';
 
-function Borrowed({ book }) {
+function BorrowedListByBook({ book }) {
 	const [state, setState] = useState(StateEnum.UnInitialized);
 	const [borrowedList, setBorrowedList] = useState([]);
 	const [isBorrowOpened, setIsBorrowOpened] = useState(false);
@@ -42,20 +42,46 @@ function Borrowed({ book }) {
 		setIsBorrowOpened(false);
 	};
 
+	const removeFromList = (borrowId) => {
+		console.log('removeFromList');
+		setBorrowedList((prevList) =>
+			prevList.filter((borrow) => borrow.id !== borrowId)
+		);
+	};
+
 	return (
 		<div className='borrow-container'>
 			<div className='mb-3 d-flex column justify-content-between'>
 				<h5>Borrowed to:</h5>{' '}
-				<PrimaryButton text='Borrow' onClick={ () => setIsBorrowOpened(true)} />
+				<PrimaryButton
+					text='Borrow to'
+					onClick={() => setIsBorrowOpened(true)}
+				/>
 			</div>
 			{state === StateEnum.Loading && <p>Loading...</p>}
 			{state === StateEnum.Error && <p>Error loading borrowed list</p>}
 			{state === StateEnum.Success && (
-				<ul>
-					{borrowedList.map((borrow) => (
-						<UserBorrowInfo key={borrow.id} borrow={borrow} />
-					))}
-				</ul>
+				<table className='table table-striped'>
+					<thead>
+						<tr>
+							<th scope='col'>Name</th>
+							<th scope='col'>Date Borrowed</th>
+							<th scope='col'>Status</th>
+							<th scope='col'></th>
+							<th scope='col'></th>
+						</tr>
+					</thead>
+					<tbody>
+						{borrowedList.map((borrow) => (
+							<BookInfoRow
+								key={borrow.id}
+								borrow={borrow}
+								showBookInfo={false}
+								removeFromList={removeFromList}
+							/>
+						))}
+					</tbody>
+				</table>
 			)}
 			<Modal isOpen={isBorrowOpened}>
 				<BorrowBookToUser onClose={onBorrowClose} book={book} />
@@ -64,8 +90,8 @@ function Borrowed({ book }) {
 	);
 }
 
-Borrowed.propTypes = {
+BorrowedListByBook.propTypes = {
 	book: PropTypes.object.isRequired,
 };
 
-export default Borrowed;
+export default BorrowedListByBook;

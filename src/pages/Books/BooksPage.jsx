@@ -93,15 +93,17 @@ function BooksPage() {
 				</table>
 			)}
 
-			<Modal isOpen={selectedBook !== null}>
-				{selectedBook && (
+			{selectedBook && (
+				<Modal isOpen={selectedBook !== null}>
 					<BookInfo book={selectedBook} onClose={closeBookInfo} />
-				)}
-			</Modal>
+				</Modal>
+			)}
 
-			<Modal isOpen={createBookOpened}>
-				<BookCreate onClose={closeBookCreate} />
-			</Modal>
+			{createBookOpened && (
+				<Modal isOpen={createBookOpened}>
+					<BookCreate onClose={closeBookCreate} />
+				</Modal>
+			)}
 		</div>
 	);
 }

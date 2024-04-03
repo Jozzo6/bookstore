@@ -35,7 +35,7 @@ const CustomInput = ({
 CustomInput.propTypes = {
 	label: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
-	value: PropTypes.string.isRequired,
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 	onChange: PropTypes.func.isRequired,
 	type: PropTypes.string,
 	placeholder: PropTypes.string,

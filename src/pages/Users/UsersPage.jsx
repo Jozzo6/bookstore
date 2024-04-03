@@ -1,13 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import userService from '../../services/user.service.jsx';
 import { StateEnum } from '../../services/enums.jsx';
-import Modal from '../../components/Modal/Modal.jsx';
-import UserInfo from './components/UserInfo.jsx';
+import { useNavigate } from 'react-router-dom';
 
 function UserPage() {
 	const [userState, setUserState] = useState(StateEnum.UnInitialized);
 	const [users, setUsers] = useState([]);
-	const [selectedUser, setSelectedUser] = useState(null);
+	const navigate = useNavigate();
 
 	const getUsers = useCallback(async () => {
 		try {
@@ -26,21 +25,7 @@ function UserPage() {
 	}, [userState, getUsers]);
 
 	const openUserInfo = (user) => {
-		setSelectedUser({ ...user });
-	};
-
-	const closeUserInfo = (user) => {
-		if (user) {
-			setUsers((prevUsers) =>
-				prevUsers.map((u) => {
-					if (u.id === user.id) {
-						return user;
-					}
-					return u;
-				})
-			);
-		}
-		setSelectedUser(null);
+		navigate(`/users/${user.id}`, { state: { user } });
 	};
 
 	return (
@@ -77,12 +62,6 @@ function UserPage() {
 					</tbody>
 				</table>
 			)}
-
-			<Modal isOpen={selectedUser !== null}>
-				{selectedUser && (
-					<UserInfo user={selectedUser} onClose={closeUserInfo} />
-				)}
-			</Modal>
 		</div>
 	);
 }

@@ -5,7 +5,7 @@ import CustomInput from '../../../components/CustomInput';
 import PrimaryButton from '../../../components/PrimaryButton';
 import SecondaryButton from '../../../components/SecondaryButton';
 import { FormState } from '../../../services/enums';
-import Borrowed from './Borrowed';
+import BorrowedListByBook from './BorrowedListByBook';
 
 function BookInfo({ book, onClose }) {
 	const [b, setBook] = useState(book);
@@ -49,8 +49,8 @@ function BookInfo({ book, onClose }) {
 					onClick={close}
 				/>
 			</div>
-			<div className='d-flex column justify-content-evenly'>
-				<form onSubmit={update}>
+			<div className='d-flex row justify-content-evenly'>
+				<form onSubmit={update} className='mb-3'>
 					<CustomInput
 						label='Author'
 						name='author'
@@ -109,7 +109,7 @@ function BookInfo({ book, onClose }) {
 							setBook({ ...b, quantity: e.target.value });
 							setState(FormState.Edited);
 						}}
-						type='text'
+						type='number'
 					/>
 					<div className='d-flex row'>
 						<PrimaryButton
@@ -125,7 +125,7 @@ function BookInfo({ book, onClose }) {
 						</div>
 					)}
 				</form>
-				<Borrowed book={b} />
+				<BorrowedListByBook book={b} />
 			</div>
 		</div>
 	);

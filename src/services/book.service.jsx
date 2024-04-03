@@ -42,6 +42,11 @@ async function getBorrowedBooks(user_id, book_id, isbn) {
 	return res.data;
 }
 
+async function deleteBorrow(borrow_id) {
+	let res = await axios.delete(`borrow/${borrow_id}`);
+	return res.data;
+}
+
 export default {
 	getAllBooks,
 	getBook,
@@ -51,4 +56,5 @@ export default {
 	borrowBook,
 	returnBook,
 	getBorrowedBooks,
+	deleteBorrow,
 };
