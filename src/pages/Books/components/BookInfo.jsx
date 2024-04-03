@@ -5,6 +5,7 @@ import CustomInput from '../../../components/CustomInput';
 import PrimaryButton from '../../../components/PrimaryButton';
 import SecondaryButton from '../../../components/SecondaryButton';
 import { FormState } from '../../../services/enums';
+import Borrowed from './Borrowed';
 
 function BookInfo({ book, onClose }) {
 	const [b, setBook] = useState(book);
@@ -48,81 +49,84 @@ function BookInfo({ book, onClose }) {
 					onClick={close}
 				/>
 			</div>
-			<form onSubmit={update}>
-				<CustomInput
-					label='Author'
-					name='author'
-					value={b.author}
-					onChange={(e) => {
-						setBook({ ...b, author: e.target.value });
-						setState(FormState.Edited);
-					}}
-					type='text'
-				/>
-				<CustomInput
-					label='Title'
-					name='title'
-					value={b.title}
-					onChange={(e) => {
-						setBook({ ...b, title: e.target.value });
-						setState(FormState.Edited);
-					}}
-					type='text'
-				/>
-				<CustomInput
-					label='Publisher'
-					name='publisher'
-					value={b.publisher}
-					onChange={(e) => {
-						setBook({ ...b, publisher: e.target.value });
-						setState(FormState.Edited);
-					}}
-					type='text'
-				/>
-				<CustomInput
-					label='Year Published'
-					name='year'
-					value={b.year}
-					onChange={(e) => {
-						setBook({ ...b, year: e.target.value });
-						setState(FormState.Edited);
-					}}
-					type='number'
-				/>
-				<CustomInput
-					label='ISBN'
-					name='isbn'
-					value={b.isbn}
-					onChange={(e) => {
-						setBook({ ...b, isbn: e.target.value });
-						setState(FormState.Edited);
-					}}
-					type='text'
-				/>
-				<CustomInput
-					label='Quantity'
-					name='quantity'
-					value={b.quantity}
-					onChange={(e) => {
-						setBook({ ...b, quantity: e.target.value });
-						setState(FormState.Edited);
-					}}
-					type='text'
-				/>
-				<div className='d-flex row'>
-					<PrimaryButton
-						type='submit'
-						disabled={state === FormState.Loading}
-						text='Update'
-						onClick={update}
+			<div className='d-flex column justify-content-evenly'>
+				<form onSubmit={update}>
+					<CustomInput
+						label='Author'
+						name='author'
+						value={b.author}
+						onChange={(e) => {
+							setBook({ ...b, author: e.target.value });
+							setState(FormState.Edited);
+						}}
+						type='text'
 					/>
-				</div>
-				{state === FormState.Error && errMessage && (
-					<div className='alert alert-danger mt-3' role='alert'>
-						{errMessage || 'An error occurred'}
+					<CustomInput
+						label='Title'
+						name='title'
+						value={b.title}
+						onChange={(e) => {
+							setBook({ ...b, title: e.target.value });
+							setState(FormState.Edited);
+						}}
+						type='text'
+					/>
+					<CustomInput
+						label='Publisher'
+						name='publisher'
+						value={b.publisher}
+						onChange={(e) => {
+							setBook({ ...b, publisher: e.target.value });
+							setState(FormState.Edited);
+						}}
+						type='text'
+					/>
+					<CustomInput
+						label='Year Published'
+						name='year'
+						value={b.year}
+						onChange={(e) => {
+							setBook({ ...b, year: e.target.value });
+							setState(FormState.Edited);
+						}}
+						type='number'
+					/>
+					<CustomInput
+						label='ISBN'
+						name='isbn'
+						value={b.isbn}
+						onChange={(e) => {
+							setBook({ ...b, isbn: e.target.value });
+							setState(FormState.Edited);
+						}}
+						type='text'
+					/>
+					<CustomInput
+						label='Quantity'
+						name='quantity'
+						value={b.quantity}
+						onChange={(e) => {
+							setBook({ ...b, quantity: e.target.value });
+							setState(FormState.Edited);
+						}}
+						type='text'
+					/>
+					<div className='d-flex row'>
+						<PrimaryButton
+							type='submit'
+							disabled={state === FormState.Loading}
+							text='Update'
+							onClick={update}
+						/>
 					</div>
-				)}
-			</form>
+					{state === FormState.Error && errMessage && (
+						<div className='alert alert-danger mt-3' role='alert'>
+							{errMessage || 'An error occurred'}
+						</div>
+					)}
+				</form>
+				<Borrowed book={b} />
+			</div>
 		</div>
 	);
 }

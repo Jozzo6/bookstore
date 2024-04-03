@@ -17,7 +17,7 @@ function UserInfo({ user, onClose }) {
 			setState(FormState.Loading);
 			e.preventDefault();
 			let updated = await userService.updateUser(u);
-			setState(FormState.Success);
+			
 			onClose(updated);
 		} catch (e) {
 			setState(FormState.Error);

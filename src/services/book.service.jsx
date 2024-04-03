@@ -25,10 +25,30 @@ async function deleteBook(id) {
 	return res.data;
 }
 
+async function borrowBook(id, user_id) {
+	let res = await axios.post(`books/${id}/borrow/${user_id}`);
+	return res.data;
+}
+
+async function returnBook(borrow_id) {
+	let res = await axios.put(`books/return/${borrow_id}`);
+	return res.data;
+}
+
+async function getBorrowedBooks(user_id, book_id, isbn) {
+	let res = await axios.get(`borrowed/books`, {
+		params: { user_id, book_id, isbn },
+	});
+	return res.data;
+}
+
 export default {
 	getAllBooks,
 	getBook,
 	createBook,
 	updateBook,
 	deleteBook,
+	borrowBook,
+	returnBook,
+	getBorrowedBooks,
 };
