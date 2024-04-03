@@ -6,6 +6,7 @@ import { FormState, StateEnum } from '../../services/enums';
 import { useLocation } from 'react-router-dom';
 import BorrowedListByUser from './components/BorrowedBooksByUser';
 import { useAuth } from '../../services/auth.service';
+import Loading from '../../components/Loading/Loading';
 
 function UserInfoPage() {
 	const location = useLocation();
@@ -53,7 +54,7 @@ function UserInfoPage() {
 	return (
 		<div>
 			<h3>User Info </h3>
-			{userState === StateEnum.Loading && <div>Loading...</div>}
+			{userState === StateEnum.Loading && <Loading />}
 			{userState === StateEnum.Error && <div>An error occurred</div>}
 			{userState === StateEnum.Success && (
 				<div>

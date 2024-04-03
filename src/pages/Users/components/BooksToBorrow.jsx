@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { StateEnum } from '../../../services/enums';
 import bookService from '../../../services/book.service';
 import PrimaryButton from '../../../components/PrimaryButton';
+import Loading from '../../../components/Loading/Loading';
 
 function BooksToBorrow({ user, onClose }) {
 	const [books, setBooks] = useState([]);
@@ -53,7 +54,7 @@ function BooksToBorrow({ user, onClose }) {
 					{errMessage}
 				</div>
 			)}
-			{state === StateEnum.Loading && <p>Loading...</p>}
+			{state === StateEnum.Loading && <Loading />}
 			{state === StateEnum.Error && <p>Error loading users</p>}
 			{state === StateEnum.Success && (
 				<div>

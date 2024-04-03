@@ -5,6 +5,7 @@ import PrimaryButton from '../../components/PrimaryButton.jsx';
 import BookInfo from './components/BookInfo.jsx';
 import Modal from '../../components/Modal/Modal.jsx';
 import BookCreate from './components/BookCreate.jsx';
+import Loading from '../../components/Loading/Loading.jsx';
 
 function BooksPage() {
 	const [bookState, setBookState] = useState(StateEnum.UnInitialized);
@@ -59,7 +60,7 @@ function BooksPage() {
 				<h3 className='h3'>Books Page</h3>
 				<PrimaryButton text='Add' onClick={() => setCreateBookOpened(true)} />
 			</div>
-			{bookState === 'loading' && <p>Loading...</p>}
+			{bookState === 'loading' && <Loading />}
 			{bookState === 'error' && <p>Error loading books</p>}
 			{bookState === 'success' && (
 				<table className='table table-striped'>

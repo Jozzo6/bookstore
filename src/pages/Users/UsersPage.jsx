@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import userService from '../../services/user.service.jsx';
 import { StateEnum } from '../../services/enums.jsx';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../../components/Loading/Loading.jsx';
 
 function UserPage() {
 	const [userState, setUserState] = useState(StateEnum.UnInitialized);
@@ -31,7 +32,7 @@ function UserPage() {
 	return (
 		<div className='container'>
 			<h3 className='m-4'>Users Page</h3>
-			{userState === 'loading' && <p>Loading...</p>}
+			{userState === 'loading' && <Loading />}
 			{userState === 'error' && <p>Error loading users</p>}
 			{userState === 'success' && (
 				<table className='table table-striped'>

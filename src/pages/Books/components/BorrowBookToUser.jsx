@@ -4,6 +4,7 @@ import userService from '../../../services/user.service';
 import { StateEnum } from '../../../services/enums';
 import bookService from '../../../services/book.service';
 import PrimaryButton from '../../../components/PrimaryButton';
+import Loading from '../../../components/Loading/Loading';
 
 function BorrowBookToUser({ book, onClose }) {
 	const [users, setUsers] = useState([]);
@@ -54,7 +55,7 @@ function BorrowBookToUser({ book, onClose }) {
 					{errMessage}
 				</div>
 			)}
-			{state === StateEnum.Loading && <p>Loading...</p>}
+			{state === StateEnum.Loading && <Loading />}
 			{state === StateEnum.Error && <p>Error loading users</p>}
 			{state === StateEnum.Success && (
 				<div>

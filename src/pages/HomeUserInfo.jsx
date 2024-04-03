@@ -3,6 +3,7 @@ import { useAuth } from '../services/auth.service';
 import { useEffect, useState } from 'react';
 import { StateEnum } from '../services/enums';
 import BookInfoRow from '../components/BorrowInfoRow';
+import Loading from '../components/Loading/Loading';
 
 function HomeUserInfo() {
 	const [borrowedBooks, setBorrows] = useState([]);
@@ -32,7 +33,7 @@ function HomeUserInfo() {
 		<div>
 			<h3>Home</h3>
 
-			{state === StateEnum.Loading && <p>Loading...</p>}
+			{state === StateEnum.Loading && <Loading />}
 			{state === StateEnum.Error && <p>Error loading borrowed books</p>}
 			{state === StateEnum.Success && (
 				<table className='table table-striped'>

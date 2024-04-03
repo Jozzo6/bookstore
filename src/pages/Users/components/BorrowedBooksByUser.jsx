@@ -7,6 +7,7 @@ import Modal from '../../../components/Modal/Modal';
 // import BorrowBookToUser from './BorrowBookToUser';
 import BookInfoRow from '../../../components/BorrowInfoRow';
 import BooksToBorrow from './BooksToBorrow';
+import Loading from '../../../components/Loading/Loading';
 
 function BorrowedListByUser({ user }) {
 	const [state, setState] = useState(StateEnum.UnInitialized);
@@ -59,7 +60,7 @@ function BorrowedListByUser({ user }) {
 					onClick={() => setIsBorrowOpened(true)}
 				/>
 			</div>
-			{state === StateEnum.Loading && <p>Loading...</p>}
+			{state === StateEnum.Loading && <Loading />}
 			{state === StateEnum.Error && <p>Error loading borrowed list</p>}
 			{state === StateEnum.Success && (
 				<table className='table table-striped'>

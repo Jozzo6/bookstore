@@ -13,6 +13,7 @@ import RegisterPage from './pages/RegisterPage';
 import { useLocation } from 'react-router-dom';
 import { StateEnum } from './services/enums';
 import axios from 'axios';
+import Loading from './components/Loading/Loading';
 
 function App() {
 	return (
@@ -25,7 +26,7 @@ function App() {
 }
 
 function AppRoutes() {
-	const { authValue, hasAccess } = useAuth();
+	const { authValue } = useAuth();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const [isLoading, setIsLoading] = useState(StateEnum.Loading);
@@ -44,7 +45,7 @@ function AppRoutes() {
 	}, [authValue, navigate, location]);
 
 	if (isLoading == StateEnum.Loading) {
-		return <div>Loading...</div>;
+		return <Loading />;
 	}
 
 	return (
