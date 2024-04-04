@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { UserTypeEnum } from './enums';
 // import { AuthEnum } from '../enums/auth-enum';
 
 const AuthContext = createContext();
@@ -31,7 +32,7 @@ export function AuthProvider({ children }) {
 			password: password,
 			first_name: first_name,
 			last_name: last_name,
-			type: 'customer',
+			type: UserTypeEnum.User,
 		});
 		storeAuthInfo(res.data);
 		setAuthValue(res.data);
