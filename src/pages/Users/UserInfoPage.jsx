@@ -2,7 +2,13 @@ import { useEffect, useState } from 'react';
 import userService from '../../services/user.service';
 import CustomInput from '../../components/CustomInput';
 import PrimaryButton from '../../components/PrimaryButton';
-import { FormState, MessageBoxType, StateEnum } from '../../services/enums';
+import {
+	FormState,
+	MessageBoxType,
+	StateEnum,
+	UserTypeEnum,
+	UserTypeEnumString,
+} from '../../services/enums';
 import { useLocation } from 'react-router-dom';
 import BorrowedListByUser from './components/BorrowedBooksByUser';
 import { useAuth } from '../../services/auth.service';
@@ -24,6 +30,7 @@ function UserInfoPage() {
 			e.preventDefault();
 			setFormState(FormState.Loading);
 			await userService.updateUser(u);
+
 			showMessage('User updated successfully', MessageBoxType.Success);
 		} catch (e) {
 			showMessage('Failed to update user', MessageBoxType.Error);
@@ -93,17 +100,25 @@ function UserInfoPage() {
 							disabled={!hasAccess(3)}
 							type='text'
 						/>
-						<CustomInput
-							label='Account Type'
-							name='type'
+						<label className='form-label' htmlFor='user_type'>
+							User Type
+						</label>
+						<select
+							className='form-select mb-3'
+							name='user_type'
+							aria-label='Default select example'
 							value={u.type}
 							onChange={(e) => {
-								setUser({ ...u, type: e.target.value });
+								setUser({ ...u, type: parseInt(e.target.value) });
 								setFormState(FormState.Edited);
 							}}
 							disabled={!hasAccess(3)}
-							type='text'
-						/>
+						>
+							<option value={UserTypeEnum.Admin}>Admin</option>
+							<option value={UserTypeEnum.Librarian}>Librarian</option>
+							<option value={UserTypeEnum.User}>User</option>
+						</select>
+
 						<div className='d-flex row'>
 							<PrimaryButton
 								type='submit'

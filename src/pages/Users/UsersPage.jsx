@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import userService from '../../services/user.service.jsx';
-import { StateEnum } from '../../services/enums.jsx';
+import { StateEnum, UserTypeEnumString } from '../../services/enums.jsx';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../../components/Loading/Loading.jsx';
 
@@ -56,7 +56,7 @@ function UserPage() {
 								<td>{user.email}</td>
 								<td>{user.first_name}</td>
 								<td>{user.last_name}</td>
-								<td>{user.type}</td>
+								<td>{UserTypeEnumString[user.type]}</td>
 								<td>{user.created}</td>
 							</tr>
 						))}

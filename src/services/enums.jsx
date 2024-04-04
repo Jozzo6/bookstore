@@ -20,9 +20,15 @@ export const FormState = {
 };
 
 export const UserTypeEnum = {
-	Admin: 'admin',
-	Librarian: 'librarian',
-	User: 'user',
+	Admin: 3,
+	Librarian: 2,
+	User: 1,
+};
+
+export const UserTypeEnumString = {
+	3: 'Admin',
+	2: 'Librarian',
+	1: 'User',
 };
 
 export const MessageBoxType = {

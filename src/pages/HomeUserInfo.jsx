@@ -59,6 +59,7 @@ function HomeUserInfo() {
 								borrow={borrow}
 								showBookInfo={true}
 								showDeleteButton={false}
+								showReturnButton={false}
 							/>
 						))}
 					</tbody>

@@ -11,6 +11,7 @@ function BookInfoRow({
 	showBookInfo,
 	removeFromList,
 	showDeleteButton = true,
+	showReturnButton = true,
 }) {
 	const [state, setState] = useState(FormState.Idle);
 	const { showMessage } = useMessageBox();
@@ -68,7 +69,7 @@ function BookInfoRow({
 				)}
 			</th>
 			<th>
-				{borrow.status === 'borrowed' && (
+				{borrow.status === 'borrowed' && showReturnButton && (
 					<PrimaryButton
 						text='Return'
 						onClick={returnBook}
