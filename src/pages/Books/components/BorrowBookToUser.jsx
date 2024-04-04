@@ -36,8 +36,8 @@ function BorrowBookToUser({ book, onClose }) {
 			await bookService.borrowBook(book.id, user.id);
 			showMessage('Book borrowed successfully', MessageBoxType.Success);
 			setBorrowActionState(StateEnum.Error);
+			onClose(true);
 		} catch (e) {
-			console.log('hello there koji kurac pas mater');
 			showMessage(
 				'Failed to borrow book: ' + e.toString(),
 				MessageBoxType.Error

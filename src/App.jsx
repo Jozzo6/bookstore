@@ -45,7 +45,7 @@ function AppRoutes() {
 		axios.defaults.headers.common[
 			'Authorization'
 		] = `Bearer ${authValue?.access_token}`;
-		if (authValue.user.type === 1 && location.pathname !== '/home') {
+		if (authValue?.user?.type === 1 && location.pathname !== '/home') {
 			navigate('/home');
 		}
 		setIsLoading(StateEnum.Success);

@@ -48,7 +48,6 @@ export function AuthProvider({ children }) {
 	};
 
 	const hasAccess = (minRole) => {
-		console.log(authValue);
 		return authValue && authValue.user.type >= minRole;
 	};
 

@@ -11,6 +11,7 @@ function BooksToBorrow({ user, onClose }) {
 	const [books, setBooks] = useState([]);
 	const [state, setState] = useState(StateEnum.UnInitialized);
 	const [borrowActionState, setBorrowActionState] = useState(StateEnum.Idle);
+	const [reload, setReload] = useState(false);
 	const { showMessage } = useMessageBox();
 
 	useEffect(() => {
@@ -34,6 +35,7 @@ function BooksToBorrow({ user, onClose }) {
 			setBorrowActionState(StateEnum.Loading);
 			await bookService.borrowBook(book.id, user.id);
 			showMessage('Book borrowed successfully', MessageBoxType.Success);
+			setReload(true);
 			setBorrowActionState(StateEnum.Error);
 		} catch (e) {
 			showMessage(
@@ -48,7 +50,7 @@ function BooksToBorrow({ user, onClose }) {
 		<div>
 			<div className='d-flex column justify-content-between m-3'>
 				<h5>Select user to which you`ll borrow the book</h5>
-				<PrimaryButton text='Close' onClick={() => onClose(false)} />
+				<PrimaryButton text='Close' onClick={() => onClose(reload)} />
 			</div>
 			{state === StateEnum.Loading && <Loading />}
 			{state === StateEnum.Error && (

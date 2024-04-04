@@ -10,7 +10,6 @@ export function MessageBoxProvider({ children }) {
 
 	function showMessage(message, type) {
 		clearTimeout(timeout);
-		console.log('showMessage', message, type);
 		setMessageBox({ message, type });
 		timeout = setTimeout(() => {
 			setMessageBox({ message: null, type: null });
