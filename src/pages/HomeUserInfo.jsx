@@ -32,7 +32,9 @@ function HomeUserInfo() {
 
 	return (
 		<div>
-			<h3>Home</h3>
+			<h3>
+				Hello {authValue?.user?.first_name} {authValue?.user?.last_name}
+			</h3>
 
 			{state === StateEnum.Loading && <Loading />}
 			{state === StateEnum.Error && (
