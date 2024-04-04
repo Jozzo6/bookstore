@@ -1,8 +1,8 @@
+import React from 'react';
 import { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { UserTypeEnum } from './enums';
-// import { AuthEnum } from '../enums/auth-enum';
 
 const AuthContext = createContext();
 
